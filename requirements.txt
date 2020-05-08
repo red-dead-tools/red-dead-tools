@@ -1,0 +1,8 @@
+oauth2client
+gspread
+attrs
+
+pytest
+
+ipython
+pdbpp

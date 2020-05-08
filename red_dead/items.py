@@ -43,12 +43,14 @@ def parse_data():
     return collections.values(), items
 
 
-def guess_by_name(guess, objs):
-    names = {obj.name.lower(): obj for obj in objs}
-    # print('guess_by_name', guess, len(objs))
-    # print(names)
-    name = get_close_matches(guess.lower(), names, n=1, cutoff=0.1)[0]
-    return names[name]
+def guess_by_name(name, objs):
+    obj_map = {obj.name.lower(): obj for obj in objs}
+    guesses = get_close_matches(name.lower(), obj_map, n=1, cutoff=0.1)
+    try:
+        guess = guesses[0]
+    except IndexError:
+        raise ValueError(f'{name} not found in {", ".join(obj_map.keys())}')
+    return obj_map[guess]
 
 
 def get_collection(collection_name):

@@ -1,7 +1,8 @@
 from red_dead.models import Settings
 import json
 
-from red_dead.items import get_item, base_dir
+from red_dead import base_dir
+from red_dead.items import get_item
 
 
 sample_item_settings_path = base_dir / 'sample-settings' / 'c-items.json'

@@ -1,10 +1,8 @@
-from pathlib import Path
-
+from red_dead import base_dir
 from red_dead.items import parse_data
 
 
-test_dir = Path(__file__).parent
-snapshot_path = test_dir / 'items.snapshot'
+snapshot_path = base_dir / 'tests/items.snapshot'
 
 
 def get_snapshot():

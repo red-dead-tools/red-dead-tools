@@ -1,12 +1,11 @@
 import json
-from pathlib import Path
 from difflib import get_close_matches
 from functools import lru_cache
 
+from . import base_dir
 from .models import Collection, Item
 
 
-base_dir = Path(__file__).parent.parent
 data_path = base_dir / 'data' / 'en.json'
 
 
@@ -54,7 +53,7 @@ def guess_by_name(name, objs):
 
 
 def get_collection(collection_name):
-    collections, items = parse_data()
+    collections, _ = parse_data()
     return guess_by_name(collection_name, collections)
 
 

@@ -1,13 +1,13 @@
+from datetime import datetime, timedelta
 import json
 
 import attr
 
 
 SETTINGS = {
-    "main.fmeEnabledEvents": "16",
-    "main.date": "2020-05-08",
-    "main.markerColor": "\"by_category\"",
     "main.isMenuOpened": "true",
+    "main.isFmeDisplayEnabled": "false",
+    "main.markerColor": "\"by_category\"",
 }
 
 
@@ -28,7 +28,11 @@ class Settings:
         for item in self.unimportant_items:
             data[f'amount.{item.code}'] = '1'
             data[f'collected.{item.code}'] = 'true'
+            for i in range(10):
+                data[f'collected.{item.code}_{i}'] = 'true'
 
+        date = datetime.now() - timedelta(hours=2)
+        data['main.date'] = date.strftime('%Y-%m-%d')
         data['length'] = len(data)
         data['version'] = self.version
 

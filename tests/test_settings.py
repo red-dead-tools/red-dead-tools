@@ -1,5 +1,4 @@
 import json
-import re
 
 from red_dead import base_dir
 from red_dead.items import get_item

@@ -5,11 +5,31 @@ import attr
 
 
 SETTINGS = {
-    "main.isMenuOpened": "true",
-    "main.isFmeDisplayEnabled": "false",
-    "main.markerColor": "\"by_category\"",
-    "main.baseLayer": "\"map.layers.detailed\"",
-    "enabled-categories": "[\"flower\",\"bottle\",\"arrowhead\",\"egg\",\"coin\",\"heirlooms\",\"bracelet\",\"earring\",\"necklace\",\"ring\",\"cups\",\"pentacles\",\"swords\",\"wands\",\"nazar\",\"fast_travel\",\"treasure\",\"user_pins\",\"random\"]",
+    "main.isMenuOpened": True,
+    "main.isFmeDisplayEnabled": False,
+    "main.markerColor": 'by_category',
+    "main.baseLayer": 'map.layers.detailed',
+    "enabled-categories": [
+        'flower',
+        'bottle',
+        'arrowhead',
+        'egg',
+        'coin',
+        'heirlooms',
+        'bracelet',
+        'earring',
+        'necklace',
+        'ring',
+        'cups',
+        'pentacles',
+        'swords',
+        'wands',
+        'nazar',
+        'fast_travel',
+        'treasure',
+        'user_pins',
+        'random',
+    ],
 }
 
 
@@ -23,6 +43,8 @@ class Settings:
 
     def as_export(self):
         data = self.static.copy()
+        for key, value in data.items():
+            data[key] = json.dumps(value)
 
         items = [item.code for item in self.important_items]
         data['importantItems'] = json.dumps(items)

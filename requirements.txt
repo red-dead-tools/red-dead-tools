@@ -4,7 +4,9 @@ attrs
 
 pytest
 
-ipython
-pdbpp
 black
 isort
+flake8
+
+ipython
+pdbpp

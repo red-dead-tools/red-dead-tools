@@ -63,9 +63,7 @@ def parse_data():
 def numerise(text):
     num_names = 'one two three four five six seven eight nine ten'.title().split()
     num_map = {str(i): name for i, name in enumerate(num_names, 1)}
-    num_map.update(
-        {'n': 'knight', 'p': 'page', 'q': 'queen', 'k': 'king'}
-    )
+    num_map.update({'n': 'knight', 'p': 'page', 'q': 'queen', 'k': 'king'})
     return num_map.get(text.lower().strip(), text)
 
 

@@ -6,3 +6,5 @@ pytest
 
 ipython
 pdbpp
+black
+isort

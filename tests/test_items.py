@@ -7,10 +7,9 @@ snapshot_path = base_dir / 'tests/items.snapshot'
 
 def get_snapshot():
     collections, items = parse_data()
-    return '\n\n'.join([
-        '\n'.join(map(str, sorted(collections))),
-        '\n'.join(map(str, sorted(items)))
-    ])
+    return '\n\n'.join(
+        ['\n'.join(map(str, sorted(collections))), '\n'.join(map(str, sorted(items)))]
+    )
 
 
 def test_snapshot_matches():

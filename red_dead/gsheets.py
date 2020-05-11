@@ -10,12 +10,10 @@ from oauth2client.service_account import ServiceAccountCredentials
 def gsheets_api_connect(gauth_json):
     scope = [
         'https://spreadsheets.google.com/feeds',
-        'https://www.googleapis.com/auth/drive'
+        'https://www.googleapis.com/auth/drive',
     ]
     gauth_dict = json.loads(gauth_json)
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
-        gauth_dict, scope
-    )
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(gauth_dict, scope)
     return gspread.authorize(credentials)
 
 

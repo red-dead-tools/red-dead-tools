@@ -1,10 +1,11 @@
-from datetime import datetime
 from collections import defaultdict
+from datetime import datetime
 
-from .sheet_transform import get_col_item_needs
-from .models import Settings
-from .items import get_item, parse_data
 from . import base_dir
+from .items import get_item, parse_data
+from .models import Settings
+from .sheet_transform import get_col_item_needs
+
 
 export_path = base_dir / 'exports'
 
@@ -28,10 +29,7 @@ def get_settings():
 
     unimportant = unimportant | items - important
 
-    return Settings(
-        important_items=important,
-        unimportant_items=unimportant,
-    )
+    return Settings(important_items=important, unimportant_items=unimportant)
 
 
 def write_export():

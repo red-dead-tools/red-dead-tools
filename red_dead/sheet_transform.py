@@ -3,8 +3,9 @@ Specific helpers to work with my RDR2 collecting spreadsheet data.
 """
 import os
 
-from .gsheets import get_sheet_rows
 from . import base_dir
+from .gsheets import get_sheet_rows
+
 
 # env var for cloud injection
 AUTH_ENV_VAR = 'RDT_GAUTH_JSON'
@@ -27,7 +28,7 @@ def get_col_item_needs():
     rows = get_rows()
 
     data = {}
-    for prefix, col_name, *items in zip(*rows[:2 + ITEM_ROWS]):
+    for prefix, col_name, *items in zip(*rows[: 2 + ITEM_ROWS]):
         if prefix and col_name != 'Weekly':
             col_name = f'{prefix} - {col_name}'
         data[col_name] = [it for it in items if it]

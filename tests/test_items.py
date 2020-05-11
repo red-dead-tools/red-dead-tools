@@ -21,3 +21,4 @@ def test_snapshot_matches():
 if __name__ == '__main__':
     snapshot = get_snapshot()
     snapshot_path.write_text(snapshot)
+    print(f'Snapshot written to {snapshot_path}')

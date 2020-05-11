@@ -6,16 +6,22 @@ from . import base_dir
 from .models import Collection, Item
 
 
-data_path = base_dir / 'data' / 'en.json'
+item_path = base_dir / 'data' / 'en.json'
+weekly_path = base_dir / 'data' / 'weekly.json'
+
+path_originals = {
+    item_path: base_dir / 'RDR2CollectorsMap/langs/en.json',
+    weekly_path: base_dir / 'RDR2CollectorsMap/data/weekly.json',
+}
 
 
 @lru_cache
 def parse_data():
-    with data_path.open() as stream:
+    with item_path.open() as stream:
         data = json.load(stream)
 
     collections = {}
-    items = set()
+    items = {}
 
     for long_code, name in data.items():
         col_item_code, _, attrib = long_code.partition('.')
@@ -37,12 +43,43 @@ def parse_data():
             collections[col_name] = col
 
         item = Item(code=col_item_code, name=name, collection=col)
-        items.add(item)
+        items[col_item_code] = item
 
-    return collections.values(), items
+    with weekly_path.open() as stream:
+        data = json.load(stream)
+
+    current = data['current']
+    weekly_item_codes = data['sets'][current]
+    col = Collection(code='weekly', name='Weekly')
+    for item_code in weekly_item_codes:
+        orig = items[item_code]
+        item = Item(code=item_code, name=orig.name, collection=col)
+        items[f'weekly_{item_code}'] = item
+    collections['weekly'] = col
+
+    return set(collections.values()), set(items.values())
+
+
+def numerise(text):
+    num_names = 'one two three four five six seven eight nine ten'.title().split()
+    num_map = {
+        str(i): name for i, name in
+        enumerate(num_names, 1)
+    }
+    num_map.update(
+        {
+            'n': 'knight',
+            'p': 'page',
+            'q': 'queen',
+            'k': 'king',
+        }
+    )
+    return num_map.get(text.lower().strip(), text)
 
 
 def guess_by_name(name, objs):
+    name = numerise(name)
+
     obj_map = {obj.name.lower(): obj for obj in objs}
     guesses = get_close_matches(name.lower(), obj_map, n=1, cutoff=0.1)
     try:

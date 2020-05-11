@@ -12,14 +12,14 @@ AUTH_ENV_VAR = 'RDT_GAUTH_JSON'
 # private sub-module for portable local dev
 AUTH_PATH = base_dir / 'red-dead-tools-private/.data/red-dead-tools-b475e08cb189.json'
 
-ITEM_ROWS = 8
+ITEM_ROWS = 9
 
 
 def get_gauth_json():
     return os.environ.get(AUTH_ENV_VAR) or AUTH_PATH.read_text()
 
 
-def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="Tom’s dailies"):
+def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="Tom"):
     return get_sheet_rows(get_gauth_json(), spreadsheet_name, sheet_name)
 
 

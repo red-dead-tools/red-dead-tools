@@ -1,12 +1,11 @@
-from red_dead import base_dir
-from red_dead.items import data_path
+import pytest
+
+from red_dead.items import path_originals
 
 
-submod_path = base_dir / 'RDR2CollectorsMap/langs/en.json'
-
-
-def test_data_is_up_to_date():
-    cached_data = data_path.read_text()
+@pytest.mark.parametrize('cached_path, submod_path', path_originals.items())
+def test_data_is_up_to_date(cached_path, submod_path):
+    cached_data = cached_path.read_text()
     submod_data = submod_path.read_text()
 
     assert cached_data == submod_data

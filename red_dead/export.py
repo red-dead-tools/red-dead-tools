@@ -16,6 +16,7 @@ def get_important():
             of_import = not item_name.startswith('!')
             item_name = item_name.strip('!')
             item = get_item(item_name, col_name)
+            print(f'{col_name:>30} - {item_name:>30} --> {item.name}')
             imp_items[of_import].add(item)
     return imp_items[True], imp_items[False]
 
@@ -44,6 +45,5 @@ def write_export():
 
 if __name__ == '__main__':
     s = get_settings()
-    print(s)
 
     write_export()

@@ -8,6 +8,8 @@ SETTINGS = {
     "main.isMenuOpened": "true",
     "main.isFmeDisplayEnabled": "false",
     "main.markerColor": "\"by_category\"",
+    "main.baseLayer": "\"map.layers.detailed\"",
+    "enabled-categories": "[\"flower\",\"bottle\",\"arrowhead\",\"egg\",\"coin\",\"heirlooms\",\"bracelet\",\"earring\",\"necklace\",\"ring\",\"cups\",\"pentacles\",\"swords\",\"wands\",\"nazar\",\"fast_travel\",\"treasure\",\"user_pins\",\"random\"]",
 }
 
 

@@ -28,7 +28,7 @@ def get_col_item_needs():
 
     data = {}
     for prefix, col_name, *items in zip(*rows[:2 + ITEM_ROWS]):
-        if prefix:
+        if prefix and col_name != 'Weekly':
             col_name = f'{prefix} - {col_name}'
         data[col_name] = [it for it in items if it]
 

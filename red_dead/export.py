@@ -2,9 +2,9 @@ from collections import defaultdict
 from datetime import datetime
 
 from . import base_dir
-from .items import get_item, parse_data
+from .items import get_item, parse_data, get_collection
 from .models import Settings
-from .sheet_transform import get_col_item_needs
+from .sheet_transform import get_col_item_needs, get_no_hide_collections
 
 
 export_path = base_dir / 'exports'
@@ -19,7 +19,15 @@ def get_important():
             item = get_item(item_name, col_name)
             print(f'{col_name:>30} - {item_name:>30} --> {item.name}')
             imp_items[of_import].add(item)
+
     return imp_items[True], imp_items[False]
+
+
+def remove_no_hide_cols(unimportant):
+    no_hide_col_names = get_no_hide_collections()
+    no_hide_cols = [get_collection(name) for name in no_hide_col_names]
+
+    return {it for it in unimportant if it.collection not in no_hide_cols}
 
 
 def get_settings():
@@ -27,7 +35,9 @@ def get_settings():
 
     important, unimportant = get_important()
 
-    unimportant = unimportant | items - important
+    unimportant |= (items - important)
+
+    unimportant = remove_no_hide_cols(unimportant)
 
     return Settings(important_items=important, unimportant_items=unimportant)
 

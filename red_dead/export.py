@@ -1,13 +1,9 @@
 from collections import defaultdict
 from datetime import datetime
 
-from . import base_dir
 from .items import get_item, parse_data, get_collection
 from .models import Settings
 from .sheet_transform import get_col_item_needs, get_no_hide_collections
-
-
-export_path = base_dir / 'exports'
 
 
 def get_important():
@@ -42,16 +38,11 @@ def get_settings():
     return Settings(important_items=important, unimportant_items=unimportant)
 
 
-def write_export():
-    s = get_settings()
+def write_export(export_path):
     now = datetime.now()
     path = export_path / now.strftime('%Y-%m-%d_%H-%M-%S.json')
 
-    path.write_text(s.as_json())
-    print(f'export written to {path}')
-
-
-if __name__ == '__main__':
     s = get_settings()
+    path.write_text(s.as_json())
 
-    write_export()
+    print(f'export written to {path}')

@@ -15,7 +15,7 @@ path_originals = {
 }
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def parse_data():
     with item_path.open() as stream:
         data = json.load(stream)

@@ -1,24 +1,18 @@
 """
 Generic helpers for fetching data from Google Spreadsheets.
 """
-import json
-
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+import google.auth
 
 
-def gsheets_api_connect(gauth_json):
-    scope = [
-        'https://spreadsheets.google.com/feeds',
-        'https://www.googleapis.com/auth/drive',
-    ]
-    gauth_dict = json.loads(gauth_json)
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(gauth_dict, scope)
-    return gspread.authorize(credentials)
+def gsheets_api_connect():
+    creds, project_id = google.auth.default(scopes=gspread.auth.DEFAULT_SCOPES)
+
+    return gspread.authorize(creds)
 
 
-def get_sheet_rows(gauth_json, spreadsheet_name, sheet_name):
-    conn = gsheets_api_connect(gauth_json)
+def get_sheet_rows(spreadsheet_name, sheet_name):
+    conn = gsheets_api_connect()
     spreadsheet = conn.open(spreadsheet_name)
     sheet = spreadsheet.worksheet(sheet_name)
     rows = sheet.get_all_values()

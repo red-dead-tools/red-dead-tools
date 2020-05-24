@@ -1,29 +1,17 @@
 """
 Specific helpers to work with my RDR2 collecting spreadsheet data.
 """
-import os
 from functools import lru_cache
 
-from . import base_dir
 from .gsheets import get_sheet_rows
 
-
-# env var for cloud injection
-AUTH_ENV_VAR = 'RDT_GAUTH_JSON'
-
-# private sub-module for portable local dev
-AUTH_PATH = base_dir / 'red-dead-tools-private/.data/red-dead-tools-b475e08cb189.json'
 
 ITEM_ROWS = 9
 
 
-def get_gauth_json():
-    return os.environ.get(AUTH_ENV_VAR) or AUTH_PATH.read_text()
-
-
-@lru_cache
+@lru_cache(maxsize=None)
 def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="Tom"):
-    return get_sheet_rows(get_gauth_json(), spreadsheet_name, sheet_name)
+    return get_sheet_rows(spreadsheet_name, sheet_name)
 
 
 def get_col_item_needs():

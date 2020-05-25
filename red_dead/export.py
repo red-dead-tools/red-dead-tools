@@ -40,9 +40,12 @@ def get_settings():
     return Settings(important_items=important, unimportant_items=unimportant)
 
 
-def write_export(export_path):
+def get_export_filename():
     now = datetime.now()
-    path = export_path / now.strftime('%Y-%m-%d_%H-%M-%S.json')
+    return now.strftime('%Y-%m-%d_%H-%M-%S.json')
+
+def write_export(export_path):
+    path = export_path / get_export_filename()
 
     s = get_settings()
     path.write_text(s.as_json())

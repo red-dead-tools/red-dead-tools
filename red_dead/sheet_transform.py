@@ -1,22 +1,17 @@
 """
 Specific helpers to work with my RDR2 collecting spreadsheet data.
 """
-from functools import lru_cache
-
 from .gsheets import get_sheet_rows
 
 
 ITEM_ROWS = 9
 
 
-@lru_cache(maxsize=None)
 def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="Tom"):
     return get_sheet_rows(spreadsheet_name, sheet_name)
 
 
-def get_col_item_needs():
-    rows = get_rows()
-
+def get_col_item_needs(rows):
     data = {}
     for prefix, col_name, *items in zip(*rows[: 2 + ITEM_ROWS]):
         if prefix and col_name != 'Weekly':
@@ -26,9 +21,7 @@ def get_col_item_needs():
     return data
 
 
-def get_no_hide_collections():
-    rows = get_rows()
-
+def get_no_hide_collections(rows):
     cols = set()
     no_hide_rows = [row for row in rows if row[0] == 'No hide']
     rows = rows[:2] + no_hide_rows
@@ -46,5 +39,5 @@ if __name__ == '__main__':
     print(rows)
     print()
 
-    col_item_needs = get_col_item_needs()
+    col_item_needs = get_col_item_needs(rows)
     print(col_item_needs)

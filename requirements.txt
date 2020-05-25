@@ -1,6 +1,7 @@
 gspread
 attrs
 httpx
+decopatch
 
 pytest
 

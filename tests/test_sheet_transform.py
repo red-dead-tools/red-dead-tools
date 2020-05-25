@@ -1,4 +1,4 @@
-from red_dead.sheet_transform import get_col_item_needs
+from red_dead.sheet_transform import get_col_item_needs, get_rows
 
 
 def test_sheet_headings():
@@ -19,5 +19,6 @@ def test_sheet_headings():
         'Family Heirlooms',
         'Coins',
     }
-    collections = set(get_col_item_needs())
+    rows = get_rows()
+    collections = set(get_col_item_needs(rows))
     assert collections == expected_collections

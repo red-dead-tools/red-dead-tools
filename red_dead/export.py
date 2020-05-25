@@ -1,14 +1,15 @@
 from collections import defaultdict
 from datetime import datetime
 
-from .items import get_item, parse_data, get_collection
+from .items import get_collection, get_item, parse_data
 from .models import Settings
-from .sheet_transform import get_col_item_needs, get_no_hide_collections
+from .sheet_transform import get_col_item_needs, get_no_hide_collections, get_rows
 
 
-def get_important():
+def get_important(rows):
     imp_items = defaultdict(set)
-    for col_name, items in get_col_item_needs().items():
+
+    for col_name, items in get_col_item_needs(rows).items():
         for item_name in items:
             of_import = not item_name.startswith('!')
             item_name = item_name.strip('!')
@@ -19,8 +20,8 @@ def get_important():
     return imp_items[True], imp_items[False]
 
 
-def remove_no_hide_cols(unimportant):
-    no_hide_col_names = get_no_hide_collections()
+def remove_no_hide_cols(unimportant, rows):
+    no_hide_col_names = get_no_hide_collections(rows)
     no_hide_cols = [get_collection(name) for name in no_hide_col_names]
 
     return {it for it in unimportant if it.collection not in no_hide_cols}
@@ -28,12 +29,13 @@ def remove_no_hide_cols(unimportant):
 
 def get_settings():
     _, items = parse_data()
+    rows = get_rows()
 
-    important, unimportant = get_important()
+    important, unimportant = get_important(rows)
 
-    unimportant |= (items - important)
+    unimportant |= items - important
 
-    unimportant = remove_no_hide_cols(unimportant)
+    unimportant = remove_no_hide_cols(unimportant, rows)
 
     return Settings(important_items=important, unimportant_items=unimportant)
 

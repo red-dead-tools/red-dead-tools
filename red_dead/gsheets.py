@@ -1,8 +1,8 @@
 """
 Generic helpers for fetching data from Google Spreadsheets.
 """
-import gspread
 import google.auth
+import gspread
 
 
 def gsheets_api_connect():

@@ -1,25 +1,19 @@
 from difflib import get_close_matches
-from functools import lru_cache
 
 import httpx
 
-from . import base_dir
+from .caching import cache
 from .models import Collection, Item
 
-
-item_path = base_dir / 'data' / 'en.json'
-weekly_path = base_dir / 'data' / 'weekly.json'
-
-path_originals = {
-    item_path: base_dir / 'RDR2CollectorsMap/langs/en.json',
-    weekly_path: base_dir / 'RDR2CollectorsMap/data/weekly.json',
-}
 
 REPO_BASE_URL = 'https://raw.githubusercontent.com/jeanropke/RDR2CollectorsMap/master'
 ITEM_URL = f'{REPO_BASE_URL}/langs/en.json'
 WEEKLY_URL = f'{REPO_BASE_URL}/data/weekly.json'
 
-@lru_cache(maxsize=None)
+TWELVE_HOURS = 12 * 60 * 60
+
+
+@cache(expire_secs=TWELVE_HOURS)
 def parse_data():
     data = httpx.get(ITEM_URL).json()
 
@@ -47,7 +41,6 @@ def parse_data():
 
         item = Item(code=col_item_code, name=name, collection=col)
         items[col_item_code] = item
-
 
     data = httpx.get(WEEKLY_URL).json()
 

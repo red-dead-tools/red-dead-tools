@@ -13,6 +13,7 @@ setup(
         'gspread',
         'attrs',
         'httpx',
+        'decopatch',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

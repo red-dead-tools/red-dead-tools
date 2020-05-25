@@ -1,6 +1,3 @@
-[submodule "RDR2CollectorsMap"]
-	path = RDR2CollectorsMap
-	url = git@github.com:jeanropke/RDR2CollectorsMap.git
 [submodule "red-dead-tools-private"]
 	path = red-dead-tools-private
 	url = git@github.com:tomviner/red-dead-tools-private.git

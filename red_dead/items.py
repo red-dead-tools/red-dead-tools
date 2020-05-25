@@ -1,6 +1,7 @@
-import json
 from difflib import get_close_matches
 from functools import lru_cache
+
+import httpx
 
 from . import base_dir
 from .models import Collection, Item
@@ -14,11 +15,13 @@ path_originals = {
     weekly_path: base_dir / 'RDR2CollectorsMap/data/weekly.json',
 }
 
+REPO_BASE_URL = 'https://raw.githubusercontent.com/jeanropke/RDR2CollectorsMap/master'
+ITEM_URL = f'{REPO_BASE_URL}/langs/en.json'
+WEEKLY_URL = f'{REPO_BASE_URL}/data/weekly.json'
 
 @lru_cache(maxsize=None)
 def parse_data():
-    with item_path.open() as stream:
-        data = json.load(stream)
+    data = httpx.get(ITEM_URL).json()
 
     collections = {}
     items = {}
@@ -45,8 +48,8 @@ def parse_data():
         item = Item(code=col_item_code, name=name, collection=col)
         items[col_item_code] = item
 
-    with weekly_path.open() as stream:
-        data = json.load(stream)
+
+    data = httpx.get(WEEKLY_URL).json()
 
     current = data['current']
     weekly_item_codes = data['sets'][current]

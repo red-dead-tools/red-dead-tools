@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='red-dead-tools',
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     url="https://github.com/red-dead-tools/red-dead-tools",
     description="Tools for playing Red Dead Redemption 2 online",
@@ -12,6 +12,7 @@ setup(
     install_requires=[
         'gspread',
         'attrs',
+        'httpx',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

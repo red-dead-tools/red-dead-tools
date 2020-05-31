@@ -27,9 +27,10 @@ def remove_no_hide_cols(unimportant, rows):
     return {it for it in unimportant if it.collection not in no_hide_cols}
 
 
-def get_settings():
+def get_settings(sheet_name=None):
     _, items = parse_data()
-    rows = get_rows()
+    sheet_conf = {'sheet_name': sheet_name} if sheet_name else {}
+    rows = get_rows(**sheet_conf)
 
     important, unimportant = get_important(rows)
 

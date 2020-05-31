@@ -47,7 +47,7 @@ def parse_data():
     current = data['current']
     weekly_item_codes = data['sets'][current]
     col = Collection(code='weekly', name='Weekly')
-    for item_code in weekly_item_codes:
+    for item_code in weekly_item_codes['items']:
         orig = items[item_code]
         item = Item(code=item_code, name=orig.name, collection=col)
         items[f'weekly_{item_code}'] = item

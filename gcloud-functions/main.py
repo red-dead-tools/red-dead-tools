@@ -33,7 +33,8 @@ def cors_enabled_function(request, get_body, headers=None):
 
 
 def get_export_data(request):
-    settings = export.get_settings()
+    sheet_name = request.args.get('sheet_name')
+    settings = export.get_settings(sheet_name=sheet_name)
     return settings.as_export()
 
 

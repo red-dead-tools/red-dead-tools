@@ -7,7 +7,7 @@ from .gsheets import get_sheet_rows
 ITEM_ROWS = 9
 
 
-def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="Tom"):
+def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="T"):
     return get_sheet_rows(spreadsheet_name, sheet_name)
 
 

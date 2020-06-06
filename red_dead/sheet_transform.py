@@ -8,7 +8,8 @@ ITEM_ROWS = 9
 
 
 def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="T"):
-    return get_sheet_rows(spreadsheet_name, sheet_name)
+    rows = get_sheet_rows(spreadsheet_name, sheet_name)
+    return [list(map(str.strip, row)) for row in rows]
 
 
 def get_col_item_needs(rows):

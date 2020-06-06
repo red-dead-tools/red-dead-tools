@@ -1,2 +1,2 @@
 flask
-red-dead-tools~=0.1.6
+red-dead-tools~=0.1.7

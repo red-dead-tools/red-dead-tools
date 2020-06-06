@@ -15,6 +15,10 @@ def get_rows(spreadsheet_name='RDR2 Collecting Needs', sheet_name="T"):
 def get_col_item_needs(rows):
     data = {}
     for prefix, col_name, *items in zip(*rows[: 2 + ITEM_ROWS]):
+        # include from github data, not spreadsheet
+        if col_name == 'Weekly':
+            continue
+
         if prefix and col_name != 'Weekly':
             col_name = f'{prefix} - {col_name}'
         data[col_name] = [it for it in items if it]

@@ -84,7 +84,17 @@ def get_item(item_name, collection_name=None):
     collections, items = parse_data()
 
     if collection_name:
-        collection = get_collection(collection_name)
-        items = [i for i in items if i.collection == collection]
+        items = items_for_collection(collection_name, items)
 
     return guess_by_name(item_name, items)
+
+
+def get_item_by_code(item_code, items):
+    return next(
+        it for it in items if it.code == item_code if it.collection.name != 'Weekly'
+    )
+
+
+def items_for_collection(collection_name, items):
+    collection = get_collection(collection_name)
+    return {i for i in items if i.collection == collection}

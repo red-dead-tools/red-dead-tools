@@ -3,7 +3,6 @@ from red_dead.sheet_transform import get_col_item_needs, get_rows
 
 def test_sheet_headings():
     expected_collections = {
-        'Weekly',
         'Flowers',
         'Tarot Cards - Cups',
         'Tarot Cards - Swords',

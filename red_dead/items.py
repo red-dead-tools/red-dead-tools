@@ -8,7 +8,8 @@ from .models import Collection, Item
 
 REPO_BASE_URL = 'https://raw.githubusercontent.com/jeanropke/RDR2CollectorsMap/master'
 ITEM_URL = f'{REPO_BASE_URL}/langs/en.json'
-WEEKLY_URL = f'{REPO_BASE_URL}/data/weekly.json'
+WEEKLY_URL = f'{REPO_BASE_URL}/data/weekly_sets.json'
+WEEKLY_SET_URL = 'https://pepegapi.jeanropke.net/v2/rdo/weekly'
 
 TWELVE_HOURS = 12 * 60 * 60
 
@@ -42,9 +43,11 @@ def parse_data():
         item = Item(code=col_item_code, name=name, collection=col)
         items[col_item_code] = item
 
+    data = httpx.get(WEEKLY_SET_URL).json()
+    current = data['set'].replace('AWARD_ROLE_COLLECTOR_SET_', '').lower() + '_set'
+
     data = httpx.get(WEEKLY_URL).json()
 
-    current = data['current']
     weekly_item_codes = data['sets'][current]
     col = Collection(code='weekly', name='Weekly')
     for item_code in weekly_item_codes['items']:
